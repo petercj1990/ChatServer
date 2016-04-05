@@ -2,8 +2,30 @@
 <html ng-app='eightBall'>
 <head>
 	<title></title>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="./public/style.css">
+
+	<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.js'></script>
+
+	<script type="text/javascript" >
+
+	
+
+	function loadDoc() {
+
+		$.ajax({url:"http://localhost:8080/public/chathistory.txt",type:"GET",success:function(result){
+		      $("#chat").html(result);
+		    }});
+
+		}		
+
+		window.setInterval(function(){
+		loadDoc();
+		}, 1000);
+	</script>
+
 </head>
 
 <body ng-controller="mainCtrl">
@@ -18,7 +40,7 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="#">Glen & Pete's chat Emporium</a>
+	      <a class="navbar-brand" href="#">Glenn & Pete's chat Emporium</a>
 	    </div>    
 	      <ul class="nav navbar-nav navbar-right">
 	        <li><a href="#">Downloads</a></li>
@@ -28,21 +50,17 @@
 	  </div><!-- /.container-fluid -->
 	</nav>
 	</head>
+	<div id="chatContainer">
+		<div id="chat"></div>
 
-	<form ng-Show="loggedIn" class="form-inline text-center" ui-keypress="{13:'postMessage()'}">
-      <div id="inputMessage" class="control-group">
-        <input type="text" placeholder="Say hello!" ng-model="message.text" />
-        <span ng-click="postMessage()" class="btn">
-          <i class="icon-comment"></i> Post
-        </span>
-      </div>
-    </form>
-
-
+		</br>
+		<form action ="SEND" method="GET">
+			<input type="text" name="username" placeholder = "Username"></input>
+			</br>
+			<input type="text" name="message" placeholder="Message" id="message"></input>
+			<input type="submit" name="submit"></input>
+		</form>
+	</div>
 	
-	<script src='app.js'></script>
-	<script src='/home/main-conroller.js'></script>
-	<script src='/services/chat-services.js'></script>
 
-</body>
-</html>
+
